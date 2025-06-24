@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import stations, readings
+from routes import stations, readings
 
 app = FastAPI()
 
