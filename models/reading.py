@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, Numeric, String, DateTime, ForeignKey
-from app.database import Base
+from database import Base
 
 class Reading(Base):
     __tablename__ = "aqi_readings"
