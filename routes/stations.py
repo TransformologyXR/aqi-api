@@ -1,11 +1,24 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from app.main.database import SessionLocal
+from app.models.station import Station
 
 router = APIRouter()
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 @router.get("/")
-def list_stations():
-    return [{"station_id": 1, "station_name": "Deira Union Square"}]
+def list_stations(db: Session = Depends(get_db)):
+    return db.query(Station).all()
 
 @router.post("/")
-def create_station():
-    return {"message": "Station created"}
+def create_station(station: Station, db: Session = Depends(get_db)):
+    db.add(station)
+    db.commit()
+    db.refresh(station)
+    return station
