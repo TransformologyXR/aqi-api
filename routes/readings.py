@@ -16,9 +16,4 @@ def get_db():
 def list_readings(db: Session = Depends(get_db)):
     return db.query(Reading).all()
 
-@router.post("/")
-def create_reading(reading: Reading, db: Session = Depends(get_db)):
-    db.add(reading)
-    db.commit()
-    db.refresh(reading)
-    return reading
+
